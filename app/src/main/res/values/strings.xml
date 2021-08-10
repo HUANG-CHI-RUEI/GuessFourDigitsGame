@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GuessFourDigitsGame</string>
+    <string name="enter_your_guess_number">Enter your guess number</string>
+    <string name="guess">Guess</string>
+    <string name="_1a2b_game">1A2B Game</string>
+    <string name="result">result</string>
+</resources>
