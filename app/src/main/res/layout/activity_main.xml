@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/_1a2b_game"
         android:textColor="@color/design_default_color_primary"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         android:gravity="center"
         android:text="@string/result"
         android:textColor="@color/design_default_color_secondary"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout" />
@@ -36,16 +36,19 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="@string/enter_your_guess_number"
+        app:counterEnabled="true"
+        app:counterMaxLength="4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:counterOverflowTextAppearance="@style/TextLimitError">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/guess_digit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/enter_your_guess_number"
             android:inputType="number"
             android:maxLength="4" />
     </com.google.android.material.textfield.TextInputLayout>
