@@ -1,7 +1,18 @@
 <resources>
-    <string name="app_name">GuessFourDigitsGame</string>
-    <string name="enter_your_guess_number">Enter your guess number</string>
-    <string name="guess">Guess</string>
-    <string name="_1a2b_game">1A2B Game</string>
-    <string name="result">result</string>
+    <string name="app_name">Four Digits Game</string>
+    <string name="input_message">Please Enter your number</string>
+    <string name="edt_input_hint">1234</string>
+    <string name="btn_ok">OK</string>
+    <string name="title_bingo">Bingo</string>
+    <string name="title_try_again">Try Again</string>
+    <string name="btn_replay">Replay</string>
+    <string name="title_activity_material_main">4 Digits</string>
+    <string name="title_replay">Are you sure ?</string>
+    <string name="msg_replay">Replay ?</string>
+    <string name="dialog_btn_yes">YES</string>
+    <string name="dialog_btn_no">NO</string>
+    <string name="toast_msg">Data Reset Finished.</string>
+    <string name="lbl_count">Count</string>
+    <string name="lbl_guess">Guess</string>
+    <string name="lbl_result">Result</string>
 </resources>

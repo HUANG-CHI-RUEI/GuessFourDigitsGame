@@ -1,44 +1,56 @@
 package com.example.guessfourdigitsgame
 
 import android.util.Log
+import java.util.*
 
 class SecretDigit {
 
-    private var secret = (0..9).toList()
+    private var secret = ""
 
-    var fourDigit = secret.shuffled().take(4).joinToString(separator = "")
+    var input = ""
 
-    private var count = 0
+    var a = 0
+    var b = 0
 
-    private val TAG = "Ray_Secret_Number"
+//    產生四位數字
+    fun generateSecret() {
+        val numbers = (0..9).toMutableList()
 
-    constructor() {
-        Log.d(TAG, "The secret number is: " + fourDigit)
-    }
-
-    fun getSecret():String {
-        return fourDigit
-    }
-
-    fun getCount(): Int{
-        return count
-    }
-
-    fun validate(guess: String): String {
-        var a: Int = 0
-        var b: Int = 0
-
-        count++
-        for(i in 0..3) {
-            if (guess[i] in fourDigit){
-                if (guess[i] == fourDigit[i]) {
-                    a += 1
-                } else {
-                    b += 1
-                }
-            }
-
+        (0..3).forEach { _ ->
+            val number = Random().nextInt(numbers.size)
+            secret += numbers.removeAt(number).toString()
         }
+
+        Log.d("SecretNumber", "generateSecret: $secret")
+    }
+
+//    return xAxB
+    fun validate(): String {
+
+        val match = secret.filter {it in input}
+        a = 0
+        b = 0
+
+        when(match.length) {
+            4 -> calc(match)
+            3 -> calc(match)
+            2 -> calc(match)
+            1 -> calc(match)
+            else -> {
+                a = 0
+                b = 0
+            }
+        }
+
         return "${a}A${b}B"
+    }
+
+    private fun calc(match: String) {
+        match.forEach {
+            if (secret.indexOf(it) == input.indexOf(it))
+                a++
+            else
+                b++
+        }
     }
 }
