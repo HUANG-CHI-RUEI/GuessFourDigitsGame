@@ -1,7 +1,7 @@
 package com.example.guessfourdigitsgame
 
 import android.os.Bundle
-import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.guessfourdigitsgame.databinding.ActivityMaterialMainBinding
@@ -21,6 +21,22 @@ class MaterialMainActivity: AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         resetViews()
+
+        // 重玩
+        binding.fab.setOnClickListener{ view ->
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.title_replay))
+                .setMessage(getString(R.string.msg_replay))
+                .setPositiveButton(getString(R.string.dialog_btn_yes)) {
+                        dialog, _ ->
+                    resetViews()
+                    Toast.makeText(this, getString(R.string.toast_msg), Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton(getString(R.string.dialog_btn_no), null)
+                .show()
+
+
+        }
     }
 
     // Reset Game
@@ -33,13 +49,12 @@ class MaterialMainActivity: AppCompatActivity() {
         secretNumber.generateSecret()
     }
 
-    fun validateInput(view: View) {
-        var result = ""
-        var title = ""
+    fun validateInput() {
+        val title: String
 
         secretNumber.input = edtInput.text.toString()
 
-        result = secretNumber.validate()
+        var result: String = secretNumber.validate()
 
         if (result.contains("4A")) {
             title = getString(R.string.title_bingo)
