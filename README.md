@@ -7,4 +7,19 @@ Android side project in Kotlin
 
 ### Screenshot
 遊戲開始畫面<br />
+<img src="pictures/1.PNG" width="30%" />
 
+輸入四位數字<br />
+<img src="pictures/2.PNG" width="30%" />
+
+按下ok按鈕，出現提示結果<br />
+<img src="pictures/3.PNG" width="30%" />
+
+直到猜到答案，提示出現 4A0B，遊戲結束<br />
+<img src="pictures/4.PNG" width="30%" />
+
+按下右下按鈕，重新開始遊戲<br />
+<img src="pictures/5.PNG" width="30%" />
+
+### HIstory
+- 2021-08-23: 基本功能完成
