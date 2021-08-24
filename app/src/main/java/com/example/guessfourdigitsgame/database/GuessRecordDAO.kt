@@ -2,6 +2,7 @@ package com.example.guessfourdigitsgame.database
 
 import androidx.room.*
 
+@Dao
 interface GuessRecordDAO {
 
     @Query("SELECT * FROM Game_Record")
