@@ -2,6 +2,7 @@ package com.example.guessfourdigitsgame
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -21,7 +22,7 @@ import java.util.*
 class MaterialMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMaterialMainBinding
 
-    private val secretNumber = SecretDigit()
+    val secretNumber = SecretDigit()
 
     private var dataset = arrayListOf<ResultViewModel>()
 
@@ -31,6 +32,8 @@ class MaterialMainActivity : AppCompatActivity() {
 
     private val dataFormat =
         SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+
+    private val TAG = MaterialMainActivity::class.java.simpleName
 
     private var count = ""      // User Guess Count
     private var guess = ""      // User Input
@@ -65,6 +68,7 @@ class MaterialMainActivity : AppCompatActivity() {
                 .setNegativeButton(getString(R.string.dialog_btn_no), null)
                 .show()
         }
+        Log.d(TAG, "onCreate: ")
     }
 
 

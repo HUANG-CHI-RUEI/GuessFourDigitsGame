@@ -2,6 +2,7 @@ package com.example.guessfourdigitsgame
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -14,15 +15,17 @@ import kotlinx.android.synthetic.main.activity_record.*
 
 class RecordActivity : AppCompatActivity() {
 
-    private var repositoryv = DBRepository(this)
-
-    private var recordSet = ArrayList<RecordViewModel>()
+    private var repository = DBRepository(this)
+    private var recordSet = arrayListOf<RecordViewModel>()
+    var adapter = RecordAdapter(recordSet)
 
     // Variable
     private var guess_cnt = 0       // User Guess Times
     private var rank = ""           // User Rank
     private var count = ""          // User Record Times
     private var datetime = ""       // User play Datetime
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,21 @@ class RecordActivity : AppCompatActivity() {
         initialData()
         // 視覺元件初始化
         processViews()
+
+        // 刪除紀錄
+        fabDelete.setOnClickListener{
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.dialog_title_delete))
+                .setMessage(getString(R.string.dialog_msg_delete))
+                .setPositiveButton(getString(R.string.dialog_btn_yes)) {
+                    _, _ ->
+                    ioThread { repository.deleteAllRecord() }
+                    reset()
+                    Toast.makeText(this, "Record delete finished", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton(getString(R.string.dialog_btn_no), null)
+                .show()
+        }
     }
 
     private fun processViews() {
@@ -66,16 +84,10 @@ class RecordActivity : AppCompatActivity() {
         count = getString(R.string.lbl_count)
         datetime = getString(R.string.lbl_datetime)
 
-        recordSet.add(
-            RecordViewModel(
-                rank = rank,
-                count = count,
-                datetime = datetime
-            )
-        )
+        recordSet.add(RecordViewModel(rank, count, datetime))
 
         ioThread {
-            val record = repositoryv.fetRankRecord()
+            val record = repository.fetRankRecord()
             record.forEachIndexed { index, item ->
                 recordSet.add(
                     RecordViewModel(
@@ -86,6 +98,12 @@ class RecordActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+
+    // <summary> 重設排名資料 </summary>
+    private fun reset() {
+        adapter.reset(rank = rank, count = count, datetime = datetime)
+        rycRecord.adapter = adapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

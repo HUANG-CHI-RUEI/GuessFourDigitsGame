@@ -33,7 +33,7 @@
         tools:ignore="LabelFor" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_validate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -54,6 +54,6 @@
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"/>
+        app:layout_constraintTop_toBottomOf="@+id/button_validate"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

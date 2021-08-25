@@ -15,5 +15,5 @@ interface GuessRecordDAO {
     fun insert(vararg  record: DataModel)
 
     @Delete
-    fun deleteAll(record: ArrayList<DataModel>)
+    fun deleteAll(record: List<DataModel>)
 }
