@@ -23,3 +23,4 @@ Android side project in Kotlin
 
 ### HIstory
 - 2021-08-23: 基本功能完成
+- 2021-08-24: 增加記錄猜題者排行榜功能，新增 Room 資料庫模組
