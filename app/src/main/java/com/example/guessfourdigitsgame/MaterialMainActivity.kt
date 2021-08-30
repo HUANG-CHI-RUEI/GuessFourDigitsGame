@@ -14,7 +14,8 @@ import com.example.guessfourdigitsgame.database.DBRepository
 import com.example.guessfourdigitsgame.database.DataModel
 import com.example.guessfourdigitsgame.database.ioThread
 import com.example.guessfourdigitsgame.databinding.ActivityMaterialMainBinding
-import com.example.guessfourdigitsgame.viewmodels.ResultViewModel
+import kotlinx.android.synthetic.main.activity_record.*
+import com.example.guessfourdigitsgame.viewmodels.DataViewModel as VM
 import kotlinx.android.synthetic.main.content_material_main.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,7 +25,7 @@ class MaterialMainActivity : AppCompatActivity() {
 
     val secretNumber = SecretDigit()
 
-    private var dataset = arrayListOf<ResultViewModel>()
+    private var dataset = arrayListOf<VM.ResultViewModel>()
 
     private lateinit var repository: DBRepository
 
@@ -34,6 +35,9 @@ class MaterialMainActivity : AppCompatActivity() {
         SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
 
     private val TAG = MaterialMainActivity::class.java.simpleName
+    private val DATASET_KEY = "DATASET_KEY"
+    private val USER_INPUT_KEY = "USER_INPUT_KEY"
+    private val ANSWER_KEY = "ANSWER_KEY"
 
     private var count = ""      // User Guess Count
     private var guess = ""      // User Input
@@ -72,6 +76,35 @@ class MaterialMainActivity : AppCompatActivity() {
     }
 
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(USER_INPUT_KEY, edtInput.text.toString())
+        outState.putParcelableArrayList(DATASET_KEY,
+            dataAdapter.getDataset())
+        outState.putString(ANSWER_KEY, secretNumber.answer)
+        Log.d(TAG, "onSaveInstanceState: User Input is ${edtInput.text}" +
+                "\n Dataset size is ${dataAdapter.itemCount}" +
+                "\n secret number is ${secretNumber.answer}")
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        edtInput.setText(savedInstanceState.getString(USER_INPUT_KEY, ""))
+
+        dataset = savedInstanceState.getParcelableArrayList(DATASET_KEY)
+            ?: arrayListOf(VM.initialResultViewModel(count, guess, result))
+
+        dataAdapter = ResultAdapter(dataset)
+        rycRecord.adapter = dataAdapter
+
+        secretNumber.answer = savedInstanceState.getString(ANSWER_KEY, "")
+
+        Log.d(TAG, "onRestoreInstanceState: Dataset Size is ${dataset.size}" +
+                "\nUser Input is ${edtInput.text}" +
+                "\nsecret number is ${secretNumber.answer}")
+
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
     fun validateInput(view: View) {
         var result: String
 
@@ -108,7 +141,11 @@ class MaterialMainActivity : AppCompatActivity() {
                         ioThread { repository.insertRecord(record) }
 
                         val intent = Intent(this, RecordActivity::class.java)
-                        intent.putExtra("GuessCount", secretNumber.guess_count)
+                        val bundle = Bundle()
+                        bundle.putInt("GuessCount", secretNumber.guess_count)
+                        bundle.putInt("ActicityEntry", ActivityCode.GAME_ACTIVITY.ordinal)
+                        intent.putExtras(bundle)
+
                         startActivity(intent)
                     }.show()
                 } else {
@@ -124,7 +161,7 @@ class MaterialMainActivity : AppCompatActivity() {
 
         // 視覺處理 新增一筆猜測紀錄
         dataAdapter.add(
-            ResultViewModel(
+            VM.ResultViewModel(
                 count = secretNumber.guess_count.toString(),
                 guess = secretNumber.input, result = result
             )
@@ -154,10 +191,8 @@ class MaterialMainActivity : AppCompatActivity() {
         result = getString(R.string.lbl_result)
 
         dataset.add(
-            ResultViewModel(
-                count = count,
-                guess = guess,
-                result = result
+            VM.initialResultViewModel(
+                count, guess, result
             )
         )
     }

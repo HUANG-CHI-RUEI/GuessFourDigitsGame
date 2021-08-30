@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.guessfourdigitsgame.adapters.RecordAdapter
 import com.example.guessfourdigitsgame.database.DBRepository
 import com.example.guessfourdigitsgame.database.ioThread
-import com.example.guessfourdigitsgame.viewmodels.RecordViewModel
+import com.example.guessfourdigitsgame.viewmodels.DataViewModel
 import kotlinx.android.synthetic.main.activity_record.*
 
 class RecordActivity : AppCompatActivity() {
 
     private var repository = DBRepository(this)
-    private var recordSet = arrayListOf<RecordViewModel>()
+    private var recordSet = arrayListOf<DataViewModel.RecordViewModel>()
     var adapter = RecordAdapter(recordSet)
 
     // Variable
@@ -55,12 +55,17 @@ class RecordActivity : AppCompatActivity() {
     private fun processViews() {
         setSupportActionBar(RecordToolbar)
 
+        val entry = intent.getIntExtra("ActivityEntry", -1)
         guess_cnt = intent.getIntExtra("GuessCount", 0)
 
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.record_dialog_title))
-            .setMessage("$guess_cnt ${getString(R.string.record_dialog_times)}")
-            .show()
+        // 如果從遊戲換面進入
+        if (entry == 1) {
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.record_dialog_title))
+                .setMessage("$guess_cnt ${getString(R.string.record_dialog_times)}")
+                .show()
+        }
+
 
         rycRecord.apply {
             // Set Recycler View Layout
@@ -84,20 +89,8 @@ class RecordActivity : AppCompatActivity() {
         count = getString(R.string.lbl_count)
         datetime = getString(R.string.lbl_datetime)
 
-        recordSet.add(RecordViewModel(rank, count, datetime))
+        recordSet.add(DataViewModel.initialRecordViewModel(rank, count, datetime))
 
-        ioThread {
-            val record = repository.fetRankRecord()
-            record.forEachIndexed { index, item ->
-                recordSet.add(
-                    RecordViewModel(
-                        "${index + 1}",
-                        item.count.toString(),
-                        item.datetime
-                    )
-                )
-            }
-        }
     }
 
     // <summary> 重設排名資料 </summary>

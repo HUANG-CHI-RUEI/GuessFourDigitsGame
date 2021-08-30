@@ -5,11 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guessfourdigitsgame.R
-import com.example.guessfourdigitsgame.viewmodels.ResultViewModel
+import com.example.guessfourdigitsgame.viewmodels.DataViewModel
 import kotlinx.android.synthetic.main.row_result_view.view.*
 
 
-class ResultAdapter(private var dataSet: ArrayList<ResultViewModel>): RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
+class ResultAdapter(private var dataSet: ArrayList<DataViewModel.ResultViewModel>): RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
 
     class ViewHolder(view:View): RecyclerView.ViewHolder(view) {
         val lblCount = view.lblCountRecord!!
@@ -32,14 +32,17 @@ class ResultAdapter(private var dataSet: ArrayList<ResultViewModel>): RecyclerVi
 
     override fun getItemCount() = dataSet.size
 
-    fun add(result: ResultViewModel) {
+    fun add(result: DataViewModel.ResultViewModel) {
         dataSet.add(result)
         notifyItemInserted(dataSet.size)
     }
 
+    // <summary> 取得資料集 </summary>
+    fun getDataset() = dataSet
+
     fun reset(count: String, guess: String, result: String) {
         dataSet = arrayListOf(
-            ResultViewModel(
+            DataViewModel.initialResultViewModel(
                 count = count,
                 guess = guess,
                 result = result

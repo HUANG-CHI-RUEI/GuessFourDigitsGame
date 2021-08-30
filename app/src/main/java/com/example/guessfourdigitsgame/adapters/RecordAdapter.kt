@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guessfourdigitsgame.R
-import com.example.guessfourdigitsgame.viewmodels.RecordViewModel
+import com.example.guessfourdigitsgame.viewmodels.DataViewModel
 import kotlinx.android.synthetic.main.row_record_view.view.*
 
-class RecordAdapter(private var dataSet: ArrayList<RecordViewModel>) : RecyclerView.Adapter<RecordAdapter.ViewHolder>(){
+class RecordAdapter(private var dataSet: ArrayList<DataViewModel.RecordViewModel>) : RecyclerView.Adapter<RecordAdapter.ViewHolder>(){
 
     class ViewHolder(view:View): RecyclerView.ViewHolder(view) {
         val lblRank = view.lblRankRecord!!
@@ -34,7 +34,7 @@ class RecordAdapter(private var dataSet: ArrayList<RecordViewModel>) : RecyclerV
         Log.d(RecordAdapter::class.java.simpleName, "reset: ")
 
         dataSet = arrayListOf(
-            RecordViewModel(
+            DataViewModel.initialRecordViewModel(
                 rank = rank,
                 count = count,
                 datetime = datetime
