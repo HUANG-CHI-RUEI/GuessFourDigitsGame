@@ -10,9 +10,12 @@ Android side project in Kotlin
 - Adapter, RecyclerView
 - Intent
 - Room
-
+- Save instance state method
 
 ### Screenshot
+主畫面<br />
+<img src="pictures/10.PNG" width="30%" />
+
 遊戲開始畫面<br />
 <img src="pictures/6.PNG" width="30%" />
 
@@ -31,3 +34,4 @@ Android side project in Kotlin
 ### HIstory
 - 2021-08-23: 基本功能完成
 - 2021-08-24: 增加記錄猜題者排行榜功能，新增 Room 資料庫模組
+- 2021-08-30: 新增主畫面，增加畫面旋轉儲存狀態機制
